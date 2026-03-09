@@ -1,0 +1,31 @@
+# Base model configuration - shared defaults
+# Params at top level so cfg.model.pretrained_model_name_or_path works
+name: base
+
+pretrained_model_name_or_path: null  # Override in specific model configs
+trust_remote_code: true
+torch_dtype: bfloat16  # bfloat16, float16, float32
+attn_implementation: sdpa  # sdpa, flash_attention_2, eager
+use_flash_attention_2: false
+
+# LoRA / QLoRA parameters
+lora:
+  enabled: true
+  r: 16  # LoRA rank
+  lora_alpha: 32  # LoRA alpha (typically 2x rank)
+  lora_dropout: 0.05
+  target_modules: null  # null = auto-detect (q_proj, v_proj, k_proj, o_proj)
+  bias: none  # none, all, lora_only
+  task_type: CAUSAL_LM
+
+# Quantization (QLoRA)
+quantization:
+  enabled: false
+  load_in_4bit: false
+  load_in_8bit: false
+  bnb_4bit_compute_dtype: bfloat16
+  bnb_4bit_quant_type: nf4  # nf4, fp4
+  bnb_4bit_use_double_quant: true
+
+# Gradient checkpointing for memory efficiency
+gradient_checkpointing: true

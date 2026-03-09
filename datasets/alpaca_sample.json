@@ -1,0 +1,42 @@
+[
+  {
+    "instruction": "Explain what machine learning is in simple terms.",
+    "input": "",
+    "output": "Machine learning is a type of artificial intelligence where computers learn from data to make decisions or predictions without being explicitly programmed for each task."
+  },
+  {
+    "instruction": "What are the primary colors?",
+    "input": "",
+    "output": "The primary colors are red, blue, and yellow. In additive color (light), the primary colors are red, green, and blue."
+  },
+  {
+    "instruction": "Write a haiku about programming.",
+    "input": "",
+    "output": "Code flows like water,\nLogic shapes the endless stream,\nBugs hide in the flow."
+  },
+  {
+    "instruction": "Convert the following to uppercase",
+    "input": "hello world",
+    "output": "HELLO WORLD"
+  },
+  {
+    "instruction": "What is the capital of France?",
+    "input": "",
+    "output": "The capital of France is Paris."
+  },
+  {
+    "instruction": "Summarize the benefits of exercise.",
+    "input": "",
+    "output": "Exercise improves cardiovascular health, strengthens muscles and bones, boosts mood, increases energy levels, and helps maintain a healthy weight."
+  },
+  {
+    "instruction": "Count the words in this sentence.",
+    "input": "The quick brown fox jumps over the lazy dog.",
+    "output": "There are 9 words in that sentence."
+  },
+  {
+    "instruction": "What is photosynthesis?",
+    "input": "",
+    "output": "Photosynthesis is the process by which plants convert sunlight, water, and carbon dioxide into glucose and oxygen, using chlorophyll in their leaves."
+  }
+]

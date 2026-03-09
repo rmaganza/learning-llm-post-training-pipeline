@@ -1,0 +1,8 @@
+# DPO - M2 fallback
+defaults:
+  - dpo
+
+training:
+  per_device_train_batch_size: 1
+  effective_batch_size: 4
+  save_steps: 50

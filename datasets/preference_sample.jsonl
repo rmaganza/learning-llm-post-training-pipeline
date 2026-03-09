@@ -1,0 +1,5 @@
+{"prompt": "What color is the sky?", "chosen": "The sky is blue due to Rayleigh scattering of sunlight.", "rejected": "The sky is green."}
+{"prompt": "Explain gravity in one sentence.", "chosen": "Gravity is the force that attracts objects with mass toward each other.", "rejected": "Gravity is when things float."}
+{"prompt": "What is 2 + 2?", "chosen": "2 + 2 equals 4.", "rejected": "2 + 2 equals 5."}
+{"prompt": "Name a programming language.", "chosen": "Python is a popular programming language known for its readability.", "rejected": "Python is a snake."}
+{"prompt": "What is the capital of Japan?", "chosen": "The capital of Japan is Tokyo.", "rejected": "The capital of Japan is Paris."}

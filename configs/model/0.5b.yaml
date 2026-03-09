@@ -1,0 +1,38 @@
+# TinyLlama 1.1B (0.5B-1B class) configuration
+# Model: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+defaults:
+  - base
+
+name: tinyllama-0.5b
+
+pretrained_model_name_or_path: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+trust_remote_code: true
+torch_dtype: bfloat16
+attn_implementation: sdpa
+use_flash_attention_2: false
+
+lora:
+  enabled: true
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+    - k_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  bias: none
+  task_type: CAUSAL_LM
+
+quantization:
+  enabled: false  # Set true for QLoRA on low-memory GPUs
+  load_in_4bit: false
+  load_in_8bit: false
+  bnb_4bit_compute_dtype: bfloat16
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_use_double_quant: true
+
+gradient_checkpointing: true

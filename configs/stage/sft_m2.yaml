@@ -1,0 +1,12 @@
+# SFT stage - M2 / limited compute fallback
+# Usage: post-train stage=sft_m2
+defaults:
+  - sft
+
+training:
+  num_train_epochs: 2
+  per_device_train_batch_size: 1
+  effective_batch_size: 4
+  learning_rate: 2.0e-5
+  save_steps: 50
+  logging_steps: 5

@@ -1,0 +1,18 @@
+# Supervised Fine-Tuning stage
+name: sft
+
+training:
+  num_train_epochs: 3
+  per_device_train_batch_size: 4
+  effective_batch_size: 32
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  logging_steps: 10
+  save_steps: 100
+  save_total_limit: 2
+  report_to: wandb
+  resume_from_checkpoint: null
+
+# M2 / limited compute: override with stage=sft_m2 or:
+# post-train stage.training.per_device_train_batch_size=1 stage.training.effective_batch_size=4

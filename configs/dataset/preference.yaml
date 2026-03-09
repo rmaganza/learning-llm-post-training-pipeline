@@ -1,0 +1,15 @@
+# Preference dataset for reward model / DPO
+# Format: prompt, chosen, rejected
+name: trl-lib/ultrafeedback_binarized
+path: null
+subset: null
+local: false
+max_samples: null
+
+preprocessing:
+  prompt_key: prompt
+  chosen_key: chosen
+  rejected_key: rejected
+  use_chat_template: true
+  max_length: 512
+  max_prompt_length: 256

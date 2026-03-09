@@ -1,0 +1,8 @@
+# Local preference dataset
+defaults:
+  - preference
+
+name: datasets/preference_sample.jsonl
+local: true
+file_type: json
+max_samples: 50

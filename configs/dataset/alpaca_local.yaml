@@ -1,0 +1,14 @@
+# Local Alpaca-format dataset (e.g. datasets/alpaca_sample.json)
+defaults:
+  - alpaca
+
+name: datasets/alpaca_sample.json
+local: true
+file_type: json
+max_samples: 100  # Demo-friendly
+
+preprocessing:
+  instruction_key: instruction
+  input_key: input
+  output_key: output
+  max_length: 256

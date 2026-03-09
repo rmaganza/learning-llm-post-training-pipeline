@@ -1,0 +1,32 @@
+# TinyLlama 1.1B with QLoRA - for M2 / limited VRAM
+# Usage: post-train model=1b_qlora
+defaults:
+  - 0.5b
+
+name: tinyllama-1b-qlora
+
+pretrained_model_name_or_path: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+torch_dtype: bfloat16
+gradient_checkpointing: true
+
+lora:
+  enabled: true
+  r: 8  # Smaller rank for QLoRA
+  lora_alpha: 16
+  lora_dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+    - k_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+quantization:
+  enabled: true
+  load_in_4bit: true
+  load_in_8bit: false
+  bnb_4bit_compute_dtype: bfloat16
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_use_double_quant: true

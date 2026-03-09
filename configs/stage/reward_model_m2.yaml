@@ -1,0 +1,8 @@
+# Reward model - M2 fallback
+defaults:
+  - reward_model
+
+training:
+  per_device_train_batch_size: 1
+  effective_batch_size: 4
+  save_steps: 50

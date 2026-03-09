@@ -1,0 +1,16 @@
+# Alpaca-style instruction dataset
+name: tatsu-lab/alpaca
+path: null
+subset: null
+local: false
+streaming: false
+trust_remote_code: false
+max_samples: null  # Set to e.g. 100 for M2 demo: dataset.max_samples=100
+
+preprocessing:
+  instruction_key: instruction
+  input_key: input
+  output_key: output
+  text_column: text
+  max_length: 512
+  packing: false
