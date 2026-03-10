@@ -3,8 +3,6 @@
 import os
 from pathlib import Path
 
-import pytest
-
 CONFIG_DIR = Path(__file__).resolve().parent.parent / "configs"
 
 # Set HF cache to workspace dir *before* datasets/transformers are imported.
