@@ -27,13 +27,13 @@ Optional: copy `.env.example` to `.env` and set `HF_TOKEN` (HuggingFace), `WANDB
 SFT on the example dataset (8 samples, ~30s on M2):
 
 ```bash
-WANDB_MODE=disabled uv run python scripts/run_training.py stage=sft_m2 dataset=alpaca_local
+WANDB_MODE=disabled uv run post-train stage=sft_m2 dataset=alpaca_local
 ```
 
 Compare baseline vs fine-tuned:
 
 ```bash
-uv run python scripts/compare_models.py TinyLlama/TinyLlama-1.1B-Chat-v1.0 outputs/sft/final --max-samples 20
+uv run post-train compare TinyLlama/TinyLlama-1.1B-Chat-v1.0 outputs/sft/final --max-samples 20
 ```
 
 ## Pipeline Stages
@@ -43,7 +43,8 @@ uv run python scripts/compare_models.py TinyLlama/TinyLlama-1.1B-Chat-v1.0 outpu
 | **SFT** | Instruction tuning with TRL SFTTrainer. LoRA or QLoRA. |
 | **Reward model** | Bradley-Terry preference learning with TRL RewardTrainer. |
 | **DPO** | Direct preference optimization (no separate reward model). |
-| **Eval** | Perplexity on Wikitext, side-by-side generation comparison. |
+
+**Subcommands:** `post-train compare <model_a> <model_b>` — perplexity + generation comparison. `post-train eval <model_path>` — perplexity only.
 
 ## Configuration
 
