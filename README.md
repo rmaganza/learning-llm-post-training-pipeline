@@ -97,3 +97,9 @@ post_training_pipeline/
 uv run pytest
 uv run ruff check .
 ```
+
+Pre-commit hook (ruff check + format):
+
+```bash
+uv sync && uv run pre-commit install
+```
