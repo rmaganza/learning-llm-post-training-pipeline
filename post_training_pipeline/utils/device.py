@@ -2,12 +2,16 @@ import platform
 
 import torch
 
+from post_training_pipeline.utils.logging import get_logger
+
+logger = get_logger(__name__)
+
 
 def detect_device() -> torch.device:
     if torch.cuda.is_available():
         return torch.device("cuda")
     if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-        return torch.device("mps")  # Apple Silicon
+        return torch.device("mps")
     return torch.device("cpu")
 
 
@@ -21,13 +25,12 @@ def is_limited_compute() -> bool:
     if not torch.cuda.is_available():
         return True
 
-    if torch.cuda.is_available():
-        try:
-            vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
-            if vram_gb < 8:
-                return True
-        except Exception:
-            pass
+    try:
+        vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
+        if vram_gb < 8:
+            return True
+    except (RuntimeError, AttributeError) as e:
+        logger.debug("Could not read VRAM: %s", e)
 
     return False
 

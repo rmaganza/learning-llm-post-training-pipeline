@@ -101,7 +101,7 @@ def test_get_dataset_max_samples() -> None:
 
 
 def test_preprocess_sft() -> None:
-    from transformers import AutoTokenizer
+    from unittest.mock import MagicMock
 
     with tempfile.NamedTemporaryFile(suffix=".json", delete=False, mode="w") as f:
         json.dump(
@@ -116,7 +116,8 @@ def test_preprocess_sft() -> None:
     try:
         config = {"name": path, "local": True}
         ds = get_dataset(config, split="train")
-        tokenizer = AutoTokenizer.from_pretrained("gpt2")
+        tokenizer = MagicMock()
+        tokenizer.apply_chat_template = None  # SFT path doesn't use chat template
         preprocess_config = {"instruction_key": "instruction", "output_key": "output"}
         processed = preprocess_dataset(ds, tokenizer, "sft", preprocess_config)
         assert "text" in processed.column_names
@@ -126,7 +127,7 @@ def test_preprocess_sft() -> None:
 
 
 def test_preprocess_unknown_stage() -> None:
-    from transformers import AutoTokenizer
+    from unittest.mock import MagicMock
 
     with tempfile.NamedTemporaryFile(suffix=".json", delete=False, mode="w") as f:
         json.dump([{"instruction": "Q", "output": "A"}], f)
@@ -134,7 +135,7 @@ def test_preprocess_unknown_stage() -> None:
 
     try:
         ds = get_dataset({"name": path, "local": True}, split="train")
-        tokenizer = AutoTokenizer.from_pretrained("gpt2")
+        tokenizer = MagicMock()
         with pytest.raises(ValueError, match="Unknown stage"):
             preprocess_dataset(ds, tokenizer, "unknown", {})
     finally:

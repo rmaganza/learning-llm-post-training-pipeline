@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 import torch
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
@@ -33,8 +33,8 @@ def load_model_and_tokenizer(
     attn_implementation: str = "sdpa",
     use_flash_attention_2: bool = False,
     gradient_checkpointing: bool = True,
-    lora_config: Optional[dict[str, Any]] = None,
-    quantization_config: Optional[dict[str, Any]] = None,
+    lora_config: dict[str, Any] | None = None,
+    quantization_config: dict[str, Any] | None = None,
 ) -> tuple[PreTrainedModel, PreTrainedTokenizer]:
     """Load causal LM with optional LoRA and 4/8-bit quantization."""
     dtype = get_dtype(torch_dtype)
@@ -81,12 +81,13 @@ def load_model_and_tokenizer(
         model.gradient_checkpointing_enable()
 
     if lora_config and lora_config.get("enabled"):
-        target_modules = lora_config.get("target_modules")
-        if target_modules is None:
-            target_modules = ["q_proj", "v_proj", "k_proj", "o_proj"]
-        target_modules = (
-            list(target_modules) if target_modules else ["q_proj", "v_proj", "k_proj", "o_proj"]
-        )
+        target_modules = lora_config.get("target_modules") or [
+            "q_proj",
+            "v_proj",
+            "k_proj",
+            "o_proj",
+        ]
+        target_modules = list(target_modules)
 
         peft_config = LoraConfig(
             r=lora_config.get("r", 16),
@@ -105,19 +106,3 @@ def load_model_and_tokenizer(
         logger.info("LoRA applied successfully")
 
     return model, tokenizer
-
-
-def load_reward_model(
-    model_name_or_path: str,
-    *,
-    torch_dtype: str = "bfloat16",
-    trust_remote_code: bool = True,
-) -> tuple[PreTrainedModel, PreTrainedTokenizer]:
-    return load_model_and_tokenizer(
-        model_name_or_path,
-        torch_dtype=torch_dtype,
-        trust_remote_code=trust_remote_code,
-        gradient_checkpointing=True,
-        lora_config=None,  # Reward models often trained full or with LoRA
-        quantization_config=None,
-    )

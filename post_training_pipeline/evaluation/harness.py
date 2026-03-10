@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -14,7 +14,7 @@ def load_model_for_eval(
     model_path: str | Path,
     *,
     torch_dtype: torch.dtype = torch.bfloat16,
-    device_map: Optional[str] = "auto",
+    device_map: str = "auto",
 ) -> tuple[AutoModelForCausalLM, AutoTokenizer]:
     model = AutoModelForCausalLM.from_pretrained(
         str(model_path),
@@ -33,7 +33,7 @@ def run_perplexity_eval(
     eval_dataset: str = "wikitext",
     eval_config: str = "wikitext-2-raw-v1",
     split: str = "test",
-    max_samples: Optional[int] = None,
+    max_samples: int | None = None,
 ) -> dict[str, float]:
     model, tokenizer = load_model_for_eval(model_path)
 
@@ -102,8 +102,8 @@ def run_generation_eval(
 def run_evaluation_harness(
     model_path: str | Path,
     *,
-    tasks: Optional[list[str]] = None,
-    limit: Optional[int] = None,
+    tasks: list[str] | None = None,
+    limit: int | None = None,
 ) -> dict[str, Any]:
     if tasks is None:
         tasks = ["perplexity"]

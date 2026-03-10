@@ -1,13 +1,5 @@
 """Model loading and utilities."""
 
-from post_training_pipeline.models.loader import (
-    get_dtype,
-    load_model_and_tokenizer,
-    load_reward_model,
-)
+from post_training_pipeline.models.loader import get_dtype, load_model_and_tokenizer
 
-__all__ = [
-    "load_model_and_tokenizer",
-    "load_reward_model",
-    "get_dtype",
-]
+__all__ = ["load_model_and_tokenizer", "get_dtype"]

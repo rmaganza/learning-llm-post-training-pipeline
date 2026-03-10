@@ -82,13 +82,17 @@ The pipeline detects Apple Silicon or missing CUDA and reduces batch size. Use `
 
 ```
 post_training_pipeline/
-├── configs/          # Hydra configs (model, stage, dataset)
 ├── datasets/         # Loaders and preprocessing
 ├── models/           # Model loading (LoRA, QLoRA)
 ├── pipelines/        # SFT, reward model, DPO
 ├── evaluation/       # Perplexity and model comparison
-├── scripts/          # prepare_dataset, run_training, compare_models
-└── tests/
+├── trainers/
+└── utils/
+
+configs/              # Hydra configs (model, stage, dataset)
+scripts/              # prepare_dataset, run_training, compare_models
+datasets/             # Data files
+tests/
 ```
 
 ## Development

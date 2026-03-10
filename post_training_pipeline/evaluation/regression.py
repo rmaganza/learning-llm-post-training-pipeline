@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from post_training_pipeline.evaluation.harness import (
     run_generation_eval,
@@ -16,14 +16,19 @@ DEFAULT_COMPARISON_PROMPTS = [
 ]
 
 
+def _truncate(text: str, max_len: int) -> str:
+    """Truncate text with ellipsis if needed."""
+    return f"{text[:max_len]}..." if len(text) > max_len else text
+
+
 def compare_models(
     model_a_path: str | Path,
     model_b_path: str | Path,
     *,
-    prompts: Optional[list[str]] = None,
+    prompts: list[str] | None = None,
     eval_dataset: str = "wikitext",
     eval_config: str = "wikitext-2-raw-v1",
-    max_samples: Optional[int] = 50,
+    max_samples: int | None = 50,
 ) -> dict[str, Any]:
     prompts = prompts or DEFAULT_COMPARISON_PROMPTS
 
@@ -96,7 +101,7 @@ def print_comparison_report(comparison: dict[str, Any]) -> None:
     for i, g in enumerate(comparison.get("generations", []), 1):
         print(f"\n--- Prompt {i} ---")
         p, a, b = g["prompt"], g["model_a"], g["model_b"]
-        print(f"Prompt: {p[:80]}{'...' if len(p) > 80 else ''}")
-        print(f"Model A: {a[:200]}{'...' if len(a) > 200 else ''}")
-        print(f"Model B: {b[:200]}{'...' if len(b) > 200 else ''}")
+        print(f"Prompt: {_truncate(p, 80)}")
+        print(f"Model A: {_truncate(a, 200)}")
+        print(f"Model B: {_truncate(b, 200)}")
     print("=" * 60)

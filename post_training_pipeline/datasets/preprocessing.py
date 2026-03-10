@@ -1,8 +1,11 @@
-from typing import Any, Optional
+from typing import Any
 
 from transformers import PreTrainedTokenizer
 
 from datasets import Dataset
+from post_training_pipeline.utils.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 def format_sft_example(
@@ -11,7 +14,7 @@ def format_sft_example(
     instruction_key: str = "instruction",
     input_key: str = "input",
     output_key: str = "output",
-    template: Optional[str] = None,
+    template: str | None = None,
 ) -> dict[str, Any]:
     instruction = example.get(instruction_key, "")
     inp = example.get(input_key, "")
@@ -26,49 +29,6 @@ def format_sft_example(
         text = f"### Instruction:\n{instruction}\n\n### Response:\n{output}"
 
     return {"text": text, "instruction": instruction, "output": output}
-
-
-def format_chat_example(
-    example: dict[str, Any],
-    *,
-    messages_key: str = "messages",
-    system_key: Optional[str] = "system",
-) -> dict[str, Any]:
-    messages = example.get(messages_key, [])
-    if not messages:
-        raise ValueError(f"No messages found in example (key={messages_key})")
-
-    system = example.get(system_key)
-    if system:
-        messages = [{"role": "system", "content": system}] + list(messages)
-
-    return {"messages": messages}
-
-
-def tokenize_sft_dataset(
-    dataset: Dataset,
-    tokenizer: PreTrainedTokenizer,
-    *,
-    text_column: str = "text",
-    max_length: int = 512,
-    padding: str = "max_length",
-    truncation: bool = True,
-) -> Dataset:
-    def tokenize_fn(examples: dict[str, Any]) -> dict[str, Any]:
-        return tokenizer(
-            examples[text_column],
-            max_length=max_length,
-            padding=padding,
-            truncation=truncation,
-            return_tensors=None,
-        )
-
-    return dataset.map(
-        tokenize_fn,
-        batched=True,
-        remove_columns=dataset.column_names,
-        desc="Tokenizing",
-    )
 
 
 def format_preference_example(
@@ -195,8 +155,8 @@ def _preprocess_preference(
                     chosen_key="chosen",
                     rejected_key="rejected",
                 )
-            except Exception:
-                pass
+            except Exception as e:
+                logger.debug("Chat template failed: %s", e)
         return out
 
     return dataset.map(format_fn, desc="Format preference", remove_columns=dataset.column_names)

@@ -1,18 +1,17 @@
 """Tests for Hydra config loading."""
 
-from pathlib import Path
-
 import pytest
 from hydra import compose, initialize_config_dir
 from omegaconf import OmegaConf
 
+from tests.conftest import CONFIG_DIR
+
 
 def test_config_loads() -> None:
-    config_dir = Path(__file__).resolve().parent.parent / "configs"
-    if not (config_dir / "config.yaml").exists():
+    if not (CONFIG_DIR / "config.yaml").exists():
         pytest.skip("configs not found")
 
-    with initialize_config_dir(config_dir=str(config_dir), version_base=None):
+    with initialize_config_dir(config_dir=str(CONFIG_DIR), version_base=None):
         cfg = compose(config_name="config", overrides=[])
         OmegaConf.resolve(cfg)
 
@@ -26,11 +25,10 @@ def test_config_loads() -> None:
 
 
 def test_config_override() -> None:
-    config_dir = Path(__file__).resolve().parent.parent / "configs"
-    if not (config_dir / "config.yaml").exists():
+    if not (CONFIG_DIR / "config.yaml").exists():
         pytest.skip("configs not found")
 
-    with initialize_config_dir(config_dir=str(config_dir), version_base=None):
+    with initialize_config_dir(config_dir=str(CONFIG_DIR), version_base=None):
         cfg = compose(config_name="config", overrides=["seed=123", "dataset.max_samples=50"])
         OmegaConf.resolve(cfg)
 
