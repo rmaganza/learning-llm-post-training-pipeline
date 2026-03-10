@@ -1,10 +1,10 @@
 # Main Hydra configuration for LLM post-training pipeline
-# Usage: python train.py model=0.5b stage=sft dataset=alpaca
-# Override: python train.py model=1b stage=dpo model.lora.rank=32
+# Usage: python train.py model=tinyllama stage=sft dataset=alpaca
+# Override: python train.py model=tinyllama_qlora stage=dpo model.lora.rank=32
 
 defaults:
   - _self_
-  - model: 0.5b
+  - model: tinyllama
   - stage: sft
   - dataset: alpaca
 

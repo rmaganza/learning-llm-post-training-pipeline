@@ -1,9 +1,9 @@
 # TinyLlama 1.1B with QLoRA - for M2 / limited VRAM
-# Usage: post-train model=1b_qlora
+# Usage: post-train model=tinyllama_qlora
 defaults:
-  - 0.5b
+  - tinyllama
 
-name: tinyllama-1b-qlora
+name: tinyllama-qlora
 
 pretrained_model_name_or_path: TinyLlama/TinyLlama-1.1B-Chat-v1.0
 torch_dtype: bfloat16

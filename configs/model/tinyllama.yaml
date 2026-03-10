@@ -1,9 +1,9 @@
-# TinyLlama 1.1B (0.5B-1B class) configuration
+# TinyLlama 1.1B - full precision + LoRA
 # Model: TinyLlama/TinyLlama-1.1B-Chat-v1.0
 defaults:
   - base
 
-name: tinyllama-0.5b
+name: tinyllama
 
 pretrained_model_name_or_path: TinyLlama/TinyLlama-1.1B-Chat-v1.0
 trust_remote_code: true

@@ -54,7 +54,7 @@ uv run post-train stage=sft dataset=alpaca_local dataset.max_samples=100
 uv run post-train stage=dpo sft_checkpoint=outputs/sft/final
 ```
 
-**Models:** `model=0.5b` (TinyLlama + LoRA), `model=1b_qlora` (4-bit for low memory)
+**Models:** `model=tinyllama` (TinyLlama + LoRA), `model=tinyllama_qlora` (4-bit for low memory)
 
 **Stages:** `sft`, `sft_m2`, `reward_model`, `reward_model_m2`, `dpo`, `dpo_m2` — `_m2` variants use smaller batches for laptops
 
@@ -76,7 +76,7 @@ uv run python scripts/prepare_dataset.py preference-pairs --input datasets/alpac
 
 ## Low-Memory / M2
 
-The pipeline detects Apple Silicon or missing CUDA and reduces batch size. Use `model=1b_qlora` for 4-bit training on M2. Set `dataset.max_samples` to cap dataset size for quick runs.
+The pipeline detects Apple Silicon or missing CUDA and reduces batch size. Use `model=tinyllama_qlora` for 4-bit training on M2. Set `dataset.max_samples` to cap dataset size for quick runs.
 
 ## Project Structure
 
